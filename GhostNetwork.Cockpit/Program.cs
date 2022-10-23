@@ -30,13 +30,12 @@ builder.Services
 
         options.Events.OnRedirectToIdentityProvider = context =>
         {
-            var host = context.Request.Host.Host;
             var forwardedHost = context.Request.Headers["X-Forwarded-Host"].ToString();
-
             if (!string.IsNullOrEmpty(forwardedHost))
             {
-                context.ProtocolMessage.RedirectUri = context.ProtocolMessage.RedirectUri.Replace(host, forwardedHost);
+                context.ProtocolMessage.RedirectUri = "https://cockpit.ghost-network.boberneprotiv.com/signin-oidc";
             }
+
             return Task.CompletedTask;
         };
 
