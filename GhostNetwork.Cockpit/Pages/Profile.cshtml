@@ -1,0 +1,17 @@
+﻿@page "{id}"
+@model ProfileModel
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@Model.Profile.FirstName @Model.Profile.LastName</h1>
+
+<h2>News</h2>
+<ul>
+    @foreach (var publication in Model.News)
+    {
+        <li>
+            <p>Author: <a asp-page="/Profile" asp-route-id="@publication.Author.Id">@publication.Author.FullName</a></p>
+            <p>@publication.Content</p>
+        </li>
+    }
+</ul>

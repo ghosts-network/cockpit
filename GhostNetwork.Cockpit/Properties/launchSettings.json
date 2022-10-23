@@ -1,0 +1,18 @@
+﻿{
+  "profiles": {
+    "GhostNetwork.Cockpit": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:5236",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AUTH_AUTHORITY": "https://accounts.ghost-network.boberneprotiv.com",
+        "AUTH_CLIENT_ID": "cockpit_local",
+        "AUTH_CLIENT_SECRET": "secret",
+        "NEWSFEED_ADDRESS": "http://boberneprotiv.com:10000",
+        "PROFILES_ADDRESS": "http://boberneprotiv.com:7432"
+      }
+    }
+  }
+}

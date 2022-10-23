@@ -1,0 +1,17 @@
+﻿@page
+@model ProfilesModel
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<ul>
+    @foreach (var profile in Model.Profiles)
+    {
+        <li>
+            <a asp-page="/Profile" asp-route-id="@profile.Id">@profile.FirstName @profile.LastName</a>
+        </li>
+    }
+</ul>
+<p>Total count: @Model.TotalCount</p>
+<a asp-page="/Profiles" asp-route-skip="@(Model.Skip + Model.Take)" asp-route-take="@Model.Take">Next</a>
