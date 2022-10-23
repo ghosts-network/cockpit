@@ -28,6 +28,14 @@ builder.Services
         options.ClientSecret = builder.Configuration["AUTH_CLIENT_SECRET"];
         options.ResponseType = "code";
 
+        options.Events.OnTicketReceived = context =>
+        {
+            var host = context.Request.Host.Host;
+            var forwardedHost = context.Request.Headers["X-Forwarded-Host"].ToString();
+            context.ReturnUri = context.ReturnUri?.Replace(host, forwardedHost);
+            return Task.CompletedTask;
+        };
+
         options.SaveTokens = true;
     });
 
