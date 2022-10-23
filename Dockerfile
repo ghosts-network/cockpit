@@ -16,4 +16,4 @@ RUN dotnet publish GhostNetwork.Cockpit.csproj -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "GhostNetwork.Gateway.Api.dll"]
+ENTRYPOINT ["dotnet", "GhostNetwork.Cockpit.dll"]
