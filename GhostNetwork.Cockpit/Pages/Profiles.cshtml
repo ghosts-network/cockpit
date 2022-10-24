@@ -1,7 +1,7 @@
 ﻿@page
 @model ProfilesModel
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Profiles";
 }
 <h1>@ViewData["Title"]</h1>
 
@@ -14,4 +14,16 @@
     }
 </ul>
 <p>Total count: @Model.TotalCount</p>
-<a asp-page="/Profiles" asp-route-skip="@(Model.Skip + Model.Take)" asp-route-take="@Model.Take">Next</a>
+@if (Model.Skip > 0)
+{
+    <a asp-page="/Profiles"
+       asp-route-skip="@(Model.Skip - Model.Take > 0 ? Model.Skip - Model.Take : 0)"
+       asp-route-take="@Model.Take">Prev</a>
+}
+
+@if (Model.Skip + Model.Take < Model.TotalCount)
+{
+    <a asp-page="/Profiles"
+       asp-route-skip="@(Model.Skip + Model.Take)"
+       asp-route-take="@Model.Take">Next</a>
+}

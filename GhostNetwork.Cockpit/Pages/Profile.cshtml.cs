@@ -7,7 +7,7 @@ public class ProfileModel : PageModel
 {
     private readonly ProfilesService service;
     private readonly NewsFeedService newsFeedService;
-    public Profile Profile { get; set; }
+    public Profile? Profile { get; set; }
     public IEnumerable<Publication> News { get; set; }
 
     public ProfileModel(
@@ -16,6 +16,7 @@ public class ProfileModel : PageModel
     {
         this.service = service;
         this.newsFeedService = newsFeedService;
+        News = Enumerable.Empty<Publication>();
     }
 
     public async Task OnGetAsync([FromRoute] string id)

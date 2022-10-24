@@ -6,7 +6,6 @@ namespace GhostNetwork.Cockpit.Pages;
 public class ProfilesModel : PageModel
 {
     private readonly ProfilesService service;
-    private readonly NewsFeedService newsFeedService;
     public IEnumerable<Profile> Profiles { get; set; }
     public long TotalCount { get; set; }
     public long Skip = 0;
@@ -25,5 +24,3 @@ public class ProfilesModel : PageModel
         (Profiles, TotalCount) = await service.SearchAsync(Skip, Take);
     }
 }
-
-public record Profile(string Id, string FirstName, string LastName);
