@@ -1,4 +1,5 @@
 using GhostNetwork.Cockpit.Pages;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Logging;
 
@@ -12,21 +13,31 @@ builder.Services.AddHttpClient<NewsFeedService>(client => client.BaseAddress = n
 
 builder.Services.AddScoped<ProfilesService>();
 builder.Services.AddHttpClient<ProfilesService>(client => client.BaseAddress = new Uri(builder.Configuration["PROFILES_ADDRESS"]));
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AllowAnonymousToPage("/AccessDenied");
+});
 builder.Services
     .AddAuthentication(options =>
     {
         options.DefaultScheme = "Cookies";
         options.DefaultChallengeScheme = "oidc";
     })
-    .AddCookie("Cookies")
+    .AddCookie("Cookies", options =>
+    {
+        options.AccessDeniedPath = "/AccessDenied";
+    })
     .AddOpenIdConnect("oidc", options =>
     {
         options.Authority = builder.Configuration["AUTH_AUTHORITY"];
+        options.Scope.Add("roles");
 
         options.ClientId = builder.Configuration["AUTH_CLIENT_ID"];
         options.ClientSecret = builder.Configuration["AUTH_CLIENT_SECRET"];
         options.ResponseType = "code";
+
+        options.GetClaimsFromUserInfoEndpoint = true;
+        options.ClaimActions.MapJsonKey("role", "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
 
         options.Events.OnRedirectToIdentityProvider = context =>
         {
@@ -40,6 +51,13 @@ builder.Services
         };
 
         options.SaveTokens = true;
+    });
+
+builder.Services
+    .AddAuthorization(options =>
+    {
+        options.AddPolicy("CockpitMinimumAccess",
+            policyBuilder => policyBuilder.RequireClaim("role", "admin"));
     });
 
 var app = builder.Build();
@@ -72,7 +90,7 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapRazorPages()
-        .RequireAuthorization();
+        .RequireAuthorization("CockpitMinimumAccess");
 });
 
 app.Run();

@@ -1,5 +1,5 @@
 ﻿@page "{id}"
-@model ProfileModel
+@model DetailsModel
 @{
     ViewData["Title"] = "Profile not found";
     if (Model.Profile != null)
@@ -21,7 +21,7 @@ else
         @foreach (var publication in Model.News)
         {
             <li>
-                <p>Author: <a asp-page="/Profile" asp-route-id="@publication.Author.Id">@publication.Author.FullName</a></p>
+                <p>Author: <a asp-page="Details" asp-route-id="@publication.Author.Id">@publication.Author.FullName</a></p>
                 <p>@publication.Content</p>
             </li>
         }

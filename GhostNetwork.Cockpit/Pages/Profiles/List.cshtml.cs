@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GhostNetwork.Cockpit.Pages;
 
-public class ProfilesModel : PageModel
+public class ListModel : PageModel
 {
     private readonly ProfilesService service;
     public IEnumerable<Profile> Profiles { get; set; }
@@ -11,7 +11,7 @@ public class ProfilesModel : PageModel
     public long Skip = 0;
     public int Take = 20;
 
-    public ProfilesModel(ProfilesService service)
+    public ListModel(ProfilesService service)
     {
         this.service = service;
         Profiles = Enumerable.Empty<Profile>();

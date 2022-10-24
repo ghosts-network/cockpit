@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GhostNetwork.Cockpit.Pages;
 
-public class ProfileModel : PageModel
+public class DetailsModel : PageModel
 {
     private readonly ProfilesService service;
     private readonly NewsFeedService newsFeedService;
     public Profile? Profile { get; set; }
     public IEnumerable<Publication> News { get; set; }
 
-    public ProfileModel(
+    public DetailsModel(
         ProfilesService service,
         NewsFeedService newsFeedService)
     {

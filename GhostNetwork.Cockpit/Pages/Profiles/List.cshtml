@@ -1,5 +1,5 @@
 ﻿@page
-@model ProfilesModel
+@model ListModel
 @{
     ViewData["Title"] = "Profiles";
 }
@@ -9,21 +9,21 @@
     @foreach (var profile in Model.Profiles)
     {
         <li>
-            <a asp-page="/Profile" asp-route-id="@profile.Id">@profile.FirstName @profile.LastName</a>
+            <a asp-page="Details" asp-route-id="@profile.Id">@profile.FirstName @profile.LastName</a>
         </li>
     }
 </ul>
 <p>Total count: @Model.TotalCount</p>
 @if (Model.Skip > 0)
 {
-    <a asp-page="/Profiles"
+    <a asp-page="List"
        asp-route-skip="@(Model.Skip - Model.Take > 0 ? Model.Skip - Model.Take : 0)"
        asp-route-take="@Model.Take">Prev</a>
 }
 
 @if (Model.Skip + Model.Take < Model.TotalCount)
 {
-    <a asp-page="/Profiles"
+    <a asp-page="List"
        asp-route-skip="@(Model.Skip + Model.Take)"
        asp-route-take="@Model.Take">Next</a>
 }
